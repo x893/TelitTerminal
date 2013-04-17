@@ -1,4 +1,4 @@
 TelitTerminal
 =============
 
-Telit Terminal
+Serial Terminal for Telit GSM modules
