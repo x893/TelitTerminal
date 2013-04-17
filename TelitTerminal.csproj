@@ -84,6 +84,9 @@
     <Compile Include="ButtonDefinition.Designer.cs">
       <DependentUpon>ButtonDefinition.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="TextBoxEx.cs">
       <SubType>Component</SubType>
@@ -102,7 +105,6 @@
     <EmbeddedResource Include="XTerminal.resx">
       <DependentUpon>XTerminal.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="TelitTerminal_TemporaryKey.pfx" />
     <Compile Include="XButton.cs">
       <SubType>Component</SubType>
     </Compile>

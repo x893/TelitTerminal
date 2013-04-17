@@ -195,11 +195,6 @@ namespace TelitTerminal
 				this.BeginInvoke(new Action<string>(loadFolder), string.Empty);
 			else
 			{
-				List<string> selected = new List<string>();
-				foreach(ListViewItem item in filesHost.SelectedItems)
-					selected.Add(item.Text);
-
-				filesHost.Items.Clear();
 				if (!string.IsNullOrEmpty(folder) && Directory.Exists(folder))
 				{
 					if (watcher != null && watcher.Path != folder)
@@ -207,14 +202,11 @@ namespace TelitTerminal
 						watcher.Dispose();
 						watcher = null;
 					}
-					DirectoryInfo d = new DirectoryInfo(folder);
-					foreach (FileInfo f in d.GetFiles())
-					{
-						filesHost.Items.Add(f.Name);
-						if (selected.Contains(f.Name))
-							filesHost.Items[filesHost.Items.Count-1].Selected = true;
-					}
+
 					watcher = new FileSystemWatcher(folder, "*.*");
+
+					refreshFiles();
+
 					watcher.EnableRaisingEvents = true;
 					watcher.IncludeSubdirectories = true;
 					watcher.Changed += new FileSystemEventHandler(watcher_changed);
@@ -224,19 +216,99 @@ namespace TelitTerminal
 				}
 				else if (watcher != null)
 				{
+					filesHost.Items.Clear();
 					watcher.EnableRaisingEvents = false;
 					watcher.Dispose();
 					watcher = null;
 				}
+				else
+					filesHost.Items.Clear();
+			}
+		}
+
+		private void removeItems(ListView.ListViewItemCollection items)
+		{
+		}
+
+		private void removeItems(ListViewEx list)
+		{
+			ListView.ListViewItemCollection items = list.Items;
+			for (int i = items.Count - 1; i >= 0; i--)
+				if (items[i].Checked)
+					items[i].Checked = false;
+				else
+					items.RemoveAt(i);
+		}
+
+		private void refreshFiles()
+		{
+			if (this.InvokeRequired)
+				this.BeginInvoke(new MethodInvoker(refreshFiles));
+			else
+			{
+				filesHost.SuspendLayout();
+				foreach (ListViewItem item in filesHost.Items)
+					item.Checked = false;
+
+				DirectoryInfo d = new DirectoryInfo(watcher.Path);
+				foreach (FileInfo f in d.GetFiles())
+				{
+					string size = f.Length.ToString();
+					bool append = true;
+					foreach (ListViewItem item in filesHost.Items)
+						if (item.Text == f.Name)
+						{
+							if (item.SubItems[1].Text != size)
+							{
+								item.SubItems[1].Text = size;
+								item.Font = new Font(item.Font, FontStyle.Bold); // .BackColor = Color.FromKnownColor(KnownColor.HotTrack);
+							}
+							append = false;
+							item.Checked = true;
+							break;
+						}
+					if (append)
+					{
+						string ext = f.Extension.ToUpperInvariant();
+
+						ListViewItem item = new ListViewItem(f.Name);
+						item.SubItems.Add(size);
+						item.Checked = true;
+
+						ListViewGroup other = null;
+						foreach (ListViewGroup group in filesHost.Groups)
+						{
+							if (group.Tag == null)
+							{
+								other = group;
+							}
+							else if ((group.Tag as string) == ext)
+							{
+								item.Group = group;
+								other = null;
+								break;
+							}
+						}
+						if (other != null)
+						{
+							item.Group = other;
+						}
+						filesHost.Items.Add(item);
+					}
+				}
+				removeItems(filesHost);
+				filesHost.ResumeLayout(true);
 			}
 		}
 
 		void watcher_Renamed(object sender, RenamedEventArgs e)
 		{
+			refreshFiles();
 		}
 
 		void watcher_changed(object sender, FileSystemEventArgs e)
 		{
+			refreshFiles();
 		}
 		#endregion
 

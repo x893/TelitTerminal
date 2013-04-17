@@ -29,6 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Python files", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Python compiled", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Other", System.Windows.Forms.HorizontalAlignment.Left);
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XTerminal));
 			this.cbPorts = new System.Windows.Forms.ComboBox();
 			this.cbSpeed = new System.Windows.Forms.ComboBox();
@@ -38,54 +41,21 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.folderSelected = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.filesHost = new System.Windows.Forms.ListView();
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.filesHostCntxMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.coToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-			this.compiler = new System.Windows.Forms.TextBox();
-			this.filesDevice = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.filesDeviceCntxMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.setActiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.compiler = new System.Windows.Forms.TextBox();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.linkEditor = new System.Windows.Forms.LinkLabel();
 			this.cbDTR = new System.Windows.Forms.CheckBox();
 			this.cbLSCRIPT = new System.Windows.Forms.CheckBox();
-			this.btnCmd1 = new TelitTerminal.CmdButton();
-			this.btnCmd5 = new TelitTerminal.CmdButton();
-			this.btnCmd6 = new TelitTerminal.CmdButton();
-			this.btnCmd7 = new TelitTerminal.CmdButton();
-			this.btnCmd4 = new TelitTerminal.CmdButton();
-			this.btnCmd2 = new TelitTerminal.CmdButton();
-			this.btnCmd0 = new TelitTerminal.CmdButton();
-			this.btnCmd8 = new TelitTerminal.CmdButton();
-			this.btnCmd9 = new TelitTerminal.CmdButton();
-			this.btnCmd3 = new TelitTerminal.CmdButton();
-			this.btnClearLog = new TelitTerminal.XButton();
-			this.btnExecute = new TelitTerminal.XButton();
-			this.btnStartMode = new TelitTerminal.XButton();
-			this.btnSetActive = new TelitTerminal.XButton();
-			this.btnDelete = new TelitTerminal.XButton();
-			this.btnDownload = new TelitTerminal.XButton();
-			this.btnRefreshDevice = new TelitTerminal.XButton();
-			this.btnUpload = new TelitTerminal.XButton();
-			this.btnCmd21 = new TelitTerminal.CmdButton();
-			this.btnCmd25 = new TelitTerminal.CmdButton();
-			this.btnCmd26 = new TelitTerminal.CmdButton();
-			this.btnCmd27 = new TelitTerminal.CmdButton();
-			this.btnCmd24 = new TelitTerminal.CmdButton();
-			this.btnCmd22 = new TelitTerminal.CmdButton();
-			this.btnCmd28 = new TelitTerminal.CmdButton();
-			this.btnCmd29 = new TelitTerminal.CmdButton();
-			this.btnCmd23 = new TelitTerminal.CmdButton();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.lblCompiler = new System.Windows.Forms.LinkLabel();
 			this.statusLine = new System.Windows.Forms.StatusStrip();
@@ -102,6 +72,17 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.GPSIFIX_UPDATE = new System.Windows.Forms.NumericUpDown();
+			this.GPSIFIX_SGEE = new System.Windows.Forms.ComboBox();
+			this.GPSIFIX_CGEE = new System.Windows.Forms.ComboBox();
+			this.GPSIFIX_EN = new System.Windows.Forms.ComboBox();
+			this.FTPGETIFIX_SIZE = new System.Windows.Forms.NumericUpDown();
+			this.FTPGETIFIX_NAME = new System.Windows.Forms.TextBox();
+			this.GPSCMODE = new System.Windows.Forms.ComboBox();
+			this.GPSPS_PTF = new System.Windows.Forms.NumericUpDown();
+			this.GPSPS = new System.Windows.Forms.ComboBox();
+			this.GPSD = new System.Windows.Forms.ComboBox();
 			this.btnOpen = new TelitTerminal.XButton();
 			this.btnPortsRefresh = new TelitTerminal.XButton();
 			this.btnCmd19 = new TelitTerminal.CmdButton();
@@ -110,42 +91,64 @@
 			this.btnCmd16 = new TelitTerminal.CmdButton();
 			this.btnCmd15 = new TelitTerminal.CmdButton();
 			this.btnCmd14 = new TelitTerminal.CmdButton();
+			this.btnCmd1 = new TelitTerminal.CmdButton();
+			this.btnCmd5 = new TelitTerminal.CmdButton();
+			this.btnCmd6 = new TelitTerminal.CmdButton();
 			this.btnCmd13 = new TelitTerminal.CmdButton();
+			this.btnCmd7 = new TelitTerminal.CmdButton();
 			this.btnCmd12 = new TelitTerminal.CmdButton();
 			this.btnCmd11 = new TelitTerminal.CmdButton();
+			this.btnCmd4 = new TelitTerminal.CmdButton();
 			this.btnCmd10 = new TelitTerminal.CmdButton();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.GPSIFIX_UPDATE = new System.Windows.Forms.NumericUpDown();
-			this.GPSIFIX_SGEE = new System.Windows.Forms.ComboBox();
-			this.GPSIFIX_CGEE = new System.Windows.Forms.ComboBox();
-			this.GPSIFIX_EN = new System.Windows.Forms.ComboBox();
+			this.btnCmd2 = new TelitTerminal.CmdButton();
+			this.btnCmd0 = new TelitTerminal.CmdButton();
+			this.btnCmd8 = new TelitTerminal.CmdButton();
+			this.btnCmd9 = new TelitTerminal.CmdButton();
+			this.btnCmd3 = new TelitTerminal.CmdButton();
+			this.btnCmd41 = new TelitTerminal.CmdButton();
 			this.btnCmd30 = new TelitTerminal.CmdButton();
-			this.FTPGETIFIX_SIZE = new System.Windows.Forms.NumericUpDown();
-			this.FTPGETIFIX_NAME = new System.Windows.Forms.TextBox();
-			this.GPSCMODE = new System.Windows.Forms.ComboBox();
-			this.GPSPS_PTF = new System.Windows.Forms.NumericUpDown();
-			this.GPSPS = new System.Windows.Forms.ComboBox();
-			this.GPSD = new System.Windows.Forms.ComboBox();
 			this.btnCmd40 = new TelitTerminal.CmdButton();
 			this.btnCmd39 = new TelitTerminal.CmdButton();
 			this.btnCmd38 = new TelitTerminal.CmdButton();
 			this.btnCmd37 = new TelitTerminal.CmdButton();
 			this.btnCmd36 = new TelitTerminal.CmdButton();
 			this.btnCmd35 = new TelitTerminal.CmdButton();
+			this.btnCmd21 = new TelitTerminal.CmdButton();
+			this.btnCmd25 = new TelitTerminal.CmdButton();
+			this.btnCmd26 = new TelitTerminal.CmdButton();
 			this.btnCmd34 = new TelitTerminal.CmdButton();
+			this.btnCmd27 = new TelitTerminal.CmdButton();
 			this.btnCmd33 = new TelitTerminal.CmdButton();
 			this.btnCmd32 = new TelitTerminal.CmdButton();
+			this.btnCmd24 = new TelitTerminal.CmdButton();
 			this.btnCmd31 = new TelitTerminal.CmdButton();
+			this.btnCmd22 = new TelitTerminal.CmdButton();
 			this.btnCmd20 = new TelitTerminal.CmdButton();
+			this.btnCmd28 = new TelitTerminal.CmdButton();
+			this.btnCmd29 = new TelitTerminal.CmdButton();
+			this.btnCmd23 = new TelitTerminal.CmdButton();
 			this.btnSelectCompiler = new TelitTerminal.XButton();
+			this.btnClearLog = new TelitTerminal.XButton();
 			this.btnEdit = new TelitTerminal.XButton();
 			this.btnSelectEditor = new TelitTerminal.XButton();
+			this.btnExecute = new TelitTerminal.XButton();
+			this.btnStartMode = new TelitTerminal.XButton();
+			this.btnSetActive = new TelitTerminal.XButton();
 			this.btnExit = new TelitTerminal.XButton();
 			this.log = new TelitTerminal.TextBoxEx();
+			this.filesDevice = new TelitTerminal.ListViewEx();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.filesHost = new TelitTerminal.ListViewEx();
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btnDelete = new TelitTerminal.XButton();
+			this.btnDownload = new TelitTerminal.XButton();
+			this.btnRefreshDevice = new TelitTerminal.XButton();
+			this.btnUpload = new TelitTerminal.XButton();
 			this.btnCompile = new TelitTerminal.XButton();
 			this.btnRefresh = new TelitTerminal.XButton();
 			this.btnSelect = new TelitTerminal.XButton();
-			this.btnCmd41 = new TelitTerminal.CmdButton();
 			this.filesHostCntxMenu.SuspendLayout();
 			this.filesDeviceCntxMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -250,34 +253,6 @@
 			this.label4.Text = "Folder";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// filesHost
-			// 
-			this.filesHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.filesHost.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader4});
-			this.filesHost.ContextMenuStrip = this.filesHostCntxMenu;
-			this.filesHost.Location = new System.Drawing.Point(10, 404);
-			this.filesHost.Margin = new System.Windows.Forms.Padding(4);
-			this.filesHost.Name = "filesHost";
-			this.filesHost.Size = new System.Drawing.Size(212, 276);
-			this.filesHost.TabIndex = 5;
-			this.filesHost.UseCompatibleStateImageBehavior = false;
-			this.filesHost.View = System.Windows.Forms.View.Details;
-			this.filesHost.DoubleClick += new System.EventHandler(this.files_DoubleClick);
-			this.filesHost.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox_KeyUp);
-			this.filesHost.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseUp);
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Text = "Name";
-			this.columnHeader3.Width = 120;
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "Size";
-			// 
 			// filesHostCntxMenu
 			// 
 			this.filesHostCntxMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -307,49 +282,6 @@
 			this.mpToolStripMenuItem.Size = new System.Drawing.Size(143, 28);
 			this.mpToolStripMenuItem.Text = "&Upload";
 			this.mpToolStripMenuItem.Click += new System.EventHandler(this.btnUpload_Click);
-			// 
-			// folderDialog
-			// 
-			this.folderDialog.Description = "Select folder";
-			this.folderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-			// 
-			// compiler
-			// 
-			this.compiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.compiler.Location = new System.Drawing.Point(89, 719);
-			this.compiler.Margin = new System.Windows.Forms.Padding(4);
-			this.compiler.Name = "compiler";
-			this.compiler.Size = new System.Drawing.Size(164, 22);
-			this.compiler.TabIndex = 32;
-			this.compiler.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// filesDevice
-			// 
-			this.filesDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.filesDevice.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-			this.filesDevice.ContextMenuStrip = this.filesDeviceCntxMenu;
-			this.filesDevice.Location = new System.Drawing.Point(448, 404);
-			this.filesDevice.Margin = new System.Windows.Forms.Padding(4);
-			this.filesDevice.MultiSelect = false;
-			this.filesDevice.Name = "filesDevice";
-			this.filesDevice.Size = new System.Drawing.Size(212, 276);
-			this.filesDevice.TabIndex = 13;
-			this.filesDevice.UseCompatibleStateImageBehavior = false;
-			this.filesDevice.View = System.Windows.Forms.View.Details;
-			this.filesDevice.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox_KeyUp);
-			this.filesDevice.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseUp);
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "Name";
-			this.columnHeader1.Width = 120;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "Size";
 			// 
 			// filesDeviceCntxMenu
 			// 
@@ -386,6 +318,21 @@
 			this.setActiveToolStripMenuItem.Size = new System.Drawing.Size(157, 28);
 			this.setActiveToolStripMenuItem.Text = "Set Active";
 			this.setActiveToolStripMenuItem.Click += new System.EventHandler(this.btnSetActive_Click);
+			// 
+			// folderDialog
+			// 
+			this.folderDialog.Description = "Select folder";
+			this.folderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+			// 
+			// compiler
+			// 
+			this.compiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.compiler.Location = new System.Drawing.Point(89, 719);
+			this.compiler.Margin = new System.Windows.Forms.Padding(4);
+			this.compiler.Name = "compiler";
+			this.compiler.Size = new System.Drawing.Size(164, 22);
+			this.compiler.TabIndex = 32;
+			this.compiler.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// linkEditor
 			// 
@@ -431,343 +378,6 @@
 			this.cbLSCRIPT.Text = "Auto LSCRIPT";
 			this.toolTip.SetToolTip(this.cbLSCRIPT, "Make LSCRIPT on connect");
 			this.cbLSCRIPT.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd1
-			// 
-			this.btnCmd1.AutoEllipsis = true;
-			this.btnCmd1.Command = null;
-			this.btnCmd1.Location = new System.Drawing.Point(364, 66);
-			this.btnCmd1.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd1.Name = "btnCmd1";
-			this.btnCmd1.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd1.TabIndex = 21;
-			this.btnCmd1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd1, "Alt+1 to execute, INS or Right Mouse Button to define");
-			this.btnCmd1.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd5
-			// 
-			this.btnCmd5.AutoEllipsis = true;
-			this.btnCmd5.Command = null;
-			this.btnCmd5.Location = new System.Drawing.Point(364, 178);
-			this.btnCmd5.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd5.Name = "btnCmd5";
-			this.btnCmd5.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd5.TabIndex = 25;
-			this.btnCmd5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd5, "Alt+5 to execute, INS or Right Mouse Button to define");
-			this.btnCmd5.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd6
-			// 
-			this.btnCmd6.AutoEllipsis = true;
-			this.btnCmd6.Command = null;
-			this.btnCmd6.Location = new System.Drawing.Point(364, 206);
-			this.btnCmd6.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd6.Name = "btnCmd6";
-			this.btnCmd6.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd6.TabIndex = 26;
-			this.btnCmd6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd6, "Alt+6 to execute, INS or Right Mouse Button to define");
-			this.btnCmd6.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd7
-			// 
-			this.btnCmd7.AutoEllipsis = true;
-			this.btnCmd7.Command = null;
-			this.btnCmd7.Location = new System.Drawing.Point(364, 234);
-			this.btnCmd7.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd7.Name = "btnCmd7";
-			this.btnCmd7.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd7.TabIndex = 27;
-			this.btnCmd7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd7, "Alt+7 to execute, INS or Right Mouse Button to define");
-			this.btnCmd7.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd4
-			// 
-			this.btnCmd4.AutoEllipsis = true;
-			this.btnCmd4.Command = null;
-			this.btnCmd4.Location = new System.Drawing.Point(364, 150);
-			this.btnCmd4.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd4.Name = "btnCmd4";
-			this.btnCmd4.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd4.TabIndex = 24;
-			this.btnCmd4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd4, "Alt+4 to execute, INS or Right Mouse Button to define");
-			this.btnCmd4.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd2
-			// 
-			this.btnCmd2.AutoEllipsis = true;
-			this.btnCmd2.Command = null;
-			this.btnCmd2.Location = new System.Drawing.Point(364, 94);
-			this.btnCmd2.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd2.Name = "btnCmd2";
-			this.btnCmd2.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd2.TabIndex = 22;
-			this.btnCmd2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd2, "Alt+2 to execute, INS or Right Mouse Button to define");
-			this.btnCmd2.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd0
-			// 
-			this.btnCmd0.AutoEllipsis = true;
-			this.btnCmd0.Command = null;
-			this.btnCmd0.Location = new System.Drawing.Point(364, 38);
-			this.btnCmd0.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd0.Name = "btnCmd0";
-			this.btnCmd0.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd0.TabIndex = 20;
-			this.btnCmd0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd0, "Alt+0 to execute, INS or Right Mouse Button to define");
-			this.btnCmd0.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd8
-			// 
-			this.btnCmd8.AutoEllipsis = true;
-			this.btnCmd8.Command = null;
-			this.btnCmd8.Location = new System.Drawing.Point(364, 262);
-			this.btnCmd8.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd8.Name = "btnCmd8";
-			this.btnCmd8.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd8.TabIndex = 28;
-			this.btnCmd8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd8, "Alt+8 to execute, INS or Right Mouse Button to define");
-			this.btnCmd8.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd9
-			// 
-			this.btnCmd9.AutoEllipsis = true;
-			this.btnCmd9.Command = null;
-			this.btnCmd9.Location = new System.Drawing.Point(364, 290);
-			this.btnCmd9.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd9.Name = "btnCmd9";
-			this.btnCmd9.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd9.TabIndex = 29;
-			this.btnCmd9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd9, "Alt+9 to execute, INS or Right Mouse Button to define");
-			this.btnCmd9.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd3
-			// 
-			this.btnCmd3.AutoEllipsis = true;
-			this.btnCmd3.Command = null;
-			this.btnCmd3.Location = new System.Drawing.Point(364, 122);
-			this.btnCmd3.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd3.Name = "btnCmd3";
-			this.btnCmd3.Size = new System.Drawing.Size(133, 28);
-			this.btnCmd3.TabIndex = 23;
-			this.btnCmd3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnCmd3, "Alt+3 to execute, INS or Right Mouse Button to define");
-			this.btnCmd3.UseVisualStyleBackColor = true;
-			// 
-			// btnClearLog
-			// 
-			this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClearLog.Location = new System.Drawing.Point(1141, 5);
-			this.btnClearLog.Margin = new System.Windows.Forms.Padding(4);
-			this.btnClearLog.Name = "btnClearLog";
-			this.btnClearLog.Size = new System.Drawing.Size(100, 28);
-			this.btnClearLog.TabIndex = 29;
-			this.btnClearLog.Text = "Clear &Log";
-			this.toolTip.SetToolTip(this.btnClearLog, "AT#LSCRIPT");
-			this.btnClearLog.UseVisualStyleBackColor = true;
-			this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
-			// 
-			// btnExecute
-			// 
-			this.btnExecute.Location = new System.Drawing.Point(277, 563);
-			this.btnExecute.Margin = new System.Windows.Forms.Padding(4);
-			this.btnExecute.Name = "btnExecute";
-			this.btnExecute.Size = new System.Drawing.Size(120, 28);
-			this.btnExecute.TabIndex = 17;
-			this.btnExecute.Text = "F8 - Execute";
-			this.toolTip.SetToolTip(this.btnExecute, "AT#EXECSCR");
-			this.btnExecute.UseVisualStyleBackColor = true;
-			this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
-			// 
-			// btnStartMode
-			// 
-			this.btnStartMode.Location = new System.Drawing.Point(277, 620);
-			this.btnStartMode.Margin = new System.Windows.Forms.Padding(4);
-			this.btnStartMode.Name = "btnStartMode";
-			this.btnStartMode.Size = new System.Drawing.Size(120, 28);
-			this.btnStartMode.TabIndex = 19;
-			this.btnStartMode.Text = "Start Mode 1,10";
-			this.toolTip.SetToolTip(this.btnStartMode, "AT#STARTMODESCR=1,10");
-			this.btnStartMode.UseVisualStyleBackColor = true;
-			this.btnStartMode.Click += new System.EventHandler(this.btnStartMode_Click);
-			// 
-			// btnSetActive
-			// 
-			this.btnSetActive.Location = new System.Drawing.Point(277, 591);
-			this.btnSetActive.Margin = new System.Windows.Forms.Padding(4);
-			this.btnSetActive.Name = "btnSetActive";
-			this.btnSetActive.Size = new System.Drawing.Size(120, 28);
-			this.btnSetActive.TabIndex = 18;
-			this.btnSetActive.Text = "F7 -Set Active";
-			this.toolTip.SetToolTip(this.btnSetActive, "AT#ESCRIPT");
-			this.btnSetActive.UseVisualStyleBackColor = true;
-			this.btnSetActive.Click += new System.EventHandler(this.btnSetActive_Click);
-			// 
-			// btnDelete
-			// 
-			this.btnDelete.Location = new System.Drawing.Point(340, 433);
-			this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
-			this.btnDelete.Name = "btnDelete";
-			this.btnDelete.Size = new System.Drawing.Size(100, 28);
-			this.btnDelete.TabIndex = 15;
-			this.btnDelete.Text = "Delete";
-			this.toolTip.SetToolTip(this.btnDelete, "AT#DSCRIPT ...");
-			this.btnDelete.UseVisualStyleBackColor = true;
-			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-			// 
-			// btnDownload
-			// 
-			this.btnDownload.Location = new System.Drawing.Point(340, 489);
-			this.btnDownload.Margin = new System.Windows.Forms.Padding(4);
-			this.btnDownload.Name = "btnDownload";
-			this.btnDownload.Size = new System.Drawing.Size(100, 28);
-			this.btnDownload.TabIndex = 16;
-			this.btnDownload.Text = "&Download <";
-			this.btnDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.toolTip.SetToolTip(this.btnDownload, "AT#RSCRIPT ...");
-			this.btnDownload.UseVisualStyleBackColor = true;
-			this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
-			// 
-			// btnRefreshDevice
-			// 
-			this.btnRefreshDevice.Location = new System.Drawing.Point(340, 404);
-			this.btnRefreshDevice.Margin = new System.Windows.Forms.Padding(4);
-			this.btnRefreshDevice.Name = "btnRefreshDevice";
-			this.btnRefreshDevice.Size = new System.Drawing.Size(100, 28);
-			this.btnRefreshDevice.TabIndex = 14;
-			this.btnRefreshDevice.Text = "Refresh";
-			this.toolTip.SetToolTip(this.btnRefreshDevice, "AT#LSCRIPT");
-			this.btnRefreshDevice.UseVisualStyleBackColor = true;
-			this.btnRefreshDevice.Click += new System.EventHandler(this.btnRefreshDevice_Click);
-			// 
-			// btnUpload
-			// 
-			this.btnUpload.Location = new System.Drawing.Point(232, 489);
-			this.btnUpload.Margin = new System.Windows.Forms.Padding(4);
-			this.btnUpload.Name = "btnUpload";
-			this.btnUpload.Size = new System.Drawing.Size(100, 28);
-			this.btnUpload.TabIndex = 9;
-			this.btnUpload.Text = "F6 - &Upload >";
-			this.btnUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip.SetToolTip(this.btnUpload, "AT#WSCRIPT ...");
-			this.btnUpload.UseVisualStyleBackColor = true;
-			this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
-			// 
-			// btnCmd21
-			// 
-			this.btnCmd21.AutoEllipsis = true;
-			this.btnCmd21.Command = null;
-			this.btnCmd21.Location = new System.Drawing.Point(7, 35);
-			this.btnCmd21.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd21.Name = "btnCmd21";
-			this.btnCmd21.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd21.TabIndex = 54;
-			this.btnCmd21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd21.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd25
-			// 
-			this.btnCmd25.AutoEllipsis = true;
-			this.btnCmd25.Command = null;
-			this.btnCmd25.Location = new System.Drawing.Point(7, 147);
-			this.btnCmd25.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd25.Name = "btnCmd25";
-			this.btnCmd25.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd25.TabIndex = 58;
-			this.btnCmd25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd25.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd26
-			// 
-			this.btnCmd26.AutoEllipsis = true;
-			this.btnCmd26.Command = null;
-			this.btnCmd26.Location = new System.Drawing.Point(7, 175);
-			this.btnCmd26.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd26.Name = "btnCmd26";
-			this.btnCmd26.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd26.TabIndex = 59;
-			this.btnCmd26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd26.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd27
-			// 
-			this.btnCmd27.AutoEllipsis = true;
-			this.btnCmd27.Command = null;
-			this.btnCmd27.Location = new System.Drawing.Point(7, 203);
-			this.btnCmd27.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd27.Name = "btnCmd27";
-			this.btnCmd27.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd27.TabIndex = 60;
-			this.btnCmd27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd27.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd24
-			// 
-			this.btnCmd24.AutoEllipsis = true;
-			this.btnCmd24.Command = null;
-			this.btnCmd24.Location = new System.Drawing.Point(7, 119);
-			this.btnCmd24.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd24.Name = "btnCmd24";
-			this.btnCmd24.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd24.TabIndex = 57;
-			this.btnCmd24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd24.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd22
-			// 
-			this.btnCmd22.AutoEllipsis = true;
-			this.btnCmd22.Command = null;
-			this.btnCmd22.Location = new System.Drawing.Point(7, 63);
-			this.btnCmd22.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd22.Name = "btnCmd22";
-			this.btnCmd22.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd22.TabIndex = 55;
-			this.btnCmd22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd22.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd28
-			// 
-			this.btnCmd28.AutoEllipsis = true;
-			this.btnCmd28.Command = null;
-			this.btnCmd28.Location = new System.Drawing.Point(7, 231);
-			this.btnCmd28.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd28.Name = "btnCmd28";
-			this.btnCmd28.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd28.TabIndex = 61;
-			this.btnCmd28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd28.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd29
-			// 
-			this.btnCmd29.AutoEllipsis = true;
-			this.btnCmd29.Command = null;
-			this.btnCmd29.Location = new System.Drawing.Point(7, 259);
-			this.btnCmd29.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd29.Name = "btnCmd29";
-			this.btnCmd29.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd29.TabIndex = 62;
-			this.btnCmd29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd29.UseVisualStyleBackColor = true;
-			// 
-			// btnCmd23
-			// 
-			this.btnCmd23.AutoEllipsis = true;
-			this.btnCmd23.Command = null;
-			this.btnCmd23.Location = new System.Drawing.Point(7, 91);
-			this.btnCmd23.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd23.Name = "btnCmd23";
-			this.btnCmd23.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd23.TabIndex = 56;
-			this.btnCmd23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd23.UseVisualStyleBackColor = true;
 			// 
 			// errorProvider
 			// 
@@ -960,6 +570,188 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Port Settings";
 			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.Add(this.btnCmd41);
+			this.tabPage2.Controls.Add(this.GPSIFIX_UPDATE);
+			this.tabPage2.Controls.Add(this.GPSIFIX_SGEE);
+			this.tabPage2.Controls.Add(this.GPSIFIX_CGEE);
+			this.tabPage2.Controls.Add(this.GPSIFIX_EN);
+			this.tabPage2.Controls.Add(this.FTPGETIFIX_SIZE);
+			this.tabPage2.Controls.Add(this.FTPGETIFIX_NAME);
+			this.tabPage2.Controls.Add(this.GPSCMODE);
+			this.tabPage2.Controls.Add(this.GPSPS_PTF);
+			this.tabPage2.Controls.Add(this.GPSPS);
+			this.tabPage2.Controls.Add(this.GPSD);
+			this.tabPage2.Controls.Add(this.btnCmd30);
+			this.tabPage2.Controls.Add(this.btnCmd40);
+			this.tabPage2.Controls.Add(this.btnCmd39);
+			this.tabPage2.Controls.Add(this.btnCmd38);
+			this.tabPage2.Controls.Add(this.btnCmd37);
+			this.tabPage2.Controls.Add(this.btnCmd36);
+			this.tabPage2.Controls.Add(this.btnCmd35);
+			this.tabPage2.Controls.Add(this.btnCmd21);
+			this.tabPage2.Controls.Add(this.btnCmd25);
+			this.tabPage2.Controls.Add(this.btnCmd26);
+			this.tabPage2.Controls.Add(this.btnCmd34);
+			this.tabPage2.Controls.Add(this.btnCmd27);
+			this.tabPage2.Controls.Add(this.btnCmd33);
+			this.tabPage2.Controls.Add(this.btnCmd32);
+			this.tabPage2.Controls.Add(this.btnCmd24);
+			this.tabPage2.Controls.Add(this.btnCmd31);
+			this.tabPage2.Controls.Add(this.btnCmd22);
+			this.tabPage2.Controls.Add(this.btnCmd20);
+			this.tabPage2.Controls.Add(this.btnCmd28);
+			this.tabPage2.Controls.Add(this.btnCmd29);
+			this.tabPage2.Controls.Add(this.btnCmd23);
+			this.tabPage2.Location = new System.Drawing.Point(4, 25);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(644, 332);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "GPS";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// GPSIFIX_UPDATE
+			// 
+			this.GPSIFIX_UPDATE.Location = new System.Drawing.Point(315, 291);
+			this.GPSIFIX_UPDATE.Maximum = new decimal(new int[] {
+            168,
+            0,
+            0,
+            0});
+			this.GPSIFIX_UPDATE.Name = "GPSIFIX_UPDATE";
+			this.GPSIFIX_UPDATE.Size = new System.Drawing.Size(50, 22);
+			this.GPSIFIX_UPDATE.TabIndex = 83;
+			this.GPSIFIX_UPDATE.ValueChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			// 
+			// GPSIFIX_SGEE
+			// 
+			this.GPSIFIX_SGEE.FormattingEnabled = true;
+			this.GPSIFIX_SGEE.Items.AddRange(new object[] {
+            "0",
+            "1"});
+			this.GPSIFIX_SGEE.Location = new System.Drawing.Point(268, 290);
+			this.GPSIFIX_SGEE.Name = "GPSIFIX_SGEE";
+			this.GPSIFIX_SGEE.Size = new System.Drawing.Size(41, 24);
+			this.GPSIFIX_SGEE.TabIndex = 82;
+			this.GPSIFIX_SGEE.Text = "0";
+			this.GPSIFIX_SGEE.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			// 
+			// GPSIFIX_CGEE
+			// 
+			this.GPSIFIX_CGEE.FormattingEnabled = true;
+			this.GPSIFIX_CGEE.Items.AddRange(new object[] {
+            "0",
+            "1"});
+			this.GPSIFIX_CGEE.Location = new System.Drawing.Point(221, 290);
+			this.GPSIFIX_CGEE.Name = "GPSIFIX_CGEE";
+			this.GPSIFIX_CGEE.Size = new System.Drawing.Size(41, 24);
+			this.GPSIFIX_CGEE.TabIndex = 81;
+			this.GPSIFIX_CGEE.Text = "0";
+			this.GPSIFIX_CGEE.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			// 
+			// GPSIFIX_EN
+			// 
+			this.GPSIFIX_EN.FormattingEnabled = true;
+			this.GPSIFIX_EN.Items.AddRange(new object[] {
+            "0",
+            "1"});
+			this.GPSIFIX_EN.Location = new System.Drawing.Point(174, 290);
+			this.GPSIFIX_EN.Name = "GPSIFIX_EN";
+			this.GPSIFIX_EN.Size = new System.Drawing.Size(41, 24);
+			this.GPSIFIX_EN.TabIndex = 80;
+			this.GPSIFIX_EN.Text = "0";
+			this.GPSIFIX_EN.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			// 
+			// FTPGETIFIX_SIZE
+			// 
+			this.FTPGETIFIX_SIZE.Location = new System.Drawing.Point(241, 263);
+			this.FTPGETIFIX_SIZE.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.FTPGETIFIX_SIZE.Name = "FTPGETIFIX_SIZE";
+			this.FTPGETIFIX_SIZE.Size = new System.Drawing.Size(50, 22);
+			this.FTPGETIFIX_SIZE.TabIndex = 78;
+			this.FTPGETIFIX_SIZE.ValueChanged += new System.EventHandler(this.FTPGETIFIX_NAME_TextChanged);
+			// 
+			// FTPGETIFIX_NAME
+			// 
+			this.FTPGETIFIX_NAME.Location = new System.Drawing.Point(174, 234);
+			this.FTPGETIFIX_NAME.Name = "FTPGETIFIX_NAME";
+			this.FTPGETIFIX_NAME.Size = new System.Drawing.Size(117, 22);
+			this.FTPGETIFIX_NAME.TabIndex = 77;
+			this.FTPGETIFIX_NAME.TextChanged += new System.EventHandler(this.FTPGETIFIX_NAME_TextChanged);
+			// 
+			// GPSCMODE
+			// 
+			this.GPSCMODE.FormattingEnabled = true;
+			this.GPSCMODE.Items.AddRange(new object[] {
+            "0",
+            "1"});
+			this.GPSCMODE.Location = new System.Drawing.Point(539, 178);
+			this.GPSCMODE.Name = "GPSCMODE";
+			this.GPSCMODE.Size = new System.Drawing.Size(41, 24);
+			this.GPSCMODE.TabIndex = 76;
+			this.GPSCMODE.Text = "0";
+			this.GPSCMODE.SelectedIndexChanged += new System.EventHandler(this.GPSCMODE_SelectedIndexChanged);
+			// 
+			// GPSPS_PTF
+			// 
+			this.GPSPS_PTF.Increment = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+			this.GPSPS_PTF.Location = new System.Drawing.Point(221, 123);
+			this.GPSPS_PTF.Maximum = new decimal(new int[] {
+            36000,
+            0,
+            0,
+            0});
+			this.GPSPS_PTF.Name = "GPSPS_PTF";
+			this.GPSPS_PTF.Size = new System.Drawing.Size(70, 22);
+			this.GPSPS_PTF.TabIndex = 75;
+			this.GPSPS_PTF.Value = new decimal(new int[] {
+            1800,
+            0,
+            0,
+            0});
+			this.GPSPS_PTF.ValueChanged += new System.EventHandler(this.GPSPS_PTF_ValueChanged);
+			// 
+			// GPSPS
+			// 
+			this.GPSPS.FormattingEnabled = true;
+			this.GPSPS.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3"});
+			this.GPSPS.Location = new System.Drawing.Point(174, 122);
+			this.GPSPS.Name = "GPSPS";
+			this.GPSPS.Size = new System.Drawing.Size(41, 24);
+			this.GPSPS.TabIndex = 74;
+			this.GPSPS.Text = "0";
+			this.GPSPS.SelectedIndexChanged += new System.EventHandler(this.GPSPS_SelectedIndexChanged);
+			// 
+			// GPSD
+			// 
+			this.GPSD.FormattingEnabled = true;
+			this.GPSD.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"});
+			this.GPSD.Location = new System.Drawing.Point(174, 10);
+			this.GPSD.Name = "GPSD";
+			this.GPSD.Size = new System.Drawing.Size(41, 24);
+			this.GPSD.TabIndex = 73;
+			this.GPSD.Text = "0";
+			this.GPSD.SelectedIndexChanged += new System.EventHandler(this.GPSD_SelectedIndexChanged);
+			// 
 			// btnOpen
 			// 
 			this.btnOpen.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -1056,6 +848,45 @@
 			this.btnCmd14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd14.UseVisualStyleBackColor = true;
 			// 
+			// btnCmd1
+			// 
+			this.btnCmd1.AutoEllipsis = true;
+			this.btnCmd1.Command = null;
+			this.btnCmd1.Location = new System.Drawing.Point(364, 66);
+			this.btnCmd1.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd1.Name = "btnCmd1";
+			this.btnCmd1.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd1.TabIndex = 21;
+			this.btnCmd1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd1, "Alt+1 to execute, INS or Right Mouse Button to define");
+			this.btnCmd1.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd5
+			// 
+			this.btnCmd5.AutoEllipsis = true;
+			this.btnCmd5.Command = null;
+			this.btnCmd5.Location = new System.Drawing.Point(364, 178);
+			this.btnCmd5.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd5.Name = "btnCmd5";
+			this.btnCmd5.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd5.TabIndex = 25;
+			this.btnCmd5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd5, "Alt+5 to execute, INS or Right Mouse Button to define");
+			this.btnCmd5.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd6
+			// 
+			this.btnCmd6.AutoEllipsis = true;
+			this.btnCmd6.Command = null;
+			this.btnCmd6.Location = new System.Drawing.Point(364, 206);
+			this.btnCmd6.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd6.Name = "btnCmd6";
+			this.btnCmd6.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd6.TabIndex = 26;
+			this.btnCmd6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd6, "Alt+6 to execute, INS or Right Mouse Button to define");
+			this.btnCmd6.UseVisualStyleBackColor = true;
+			// 
 			// btnCmd13
 			// 
 			this.btnCmd13.AutoEllipsis = true;
@@ -1067,6 +898,19 @@
 			this.btnCmd13.TabIndex = 33;
 			this.btnCmd13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd13.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd7
+			// 
+			this.btnCmd7.AutoEllipsis = true;
+			this.btnCmd7.Command = null;
+			this.btnCmd7.Location = new System.Drawing.Point(364, 234);
+			this.btnCmd7.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd7.Name = "btnCmd7";
+			this.btnCmd7.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd7.TabIndex = 27;
+			this.btnCmd7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd7, "Alt+7 to execute, INS or Right Mouse Button to define");
+			this.btnCmd7.UseVisualStyleBackColor = true;
 			// 
 			// btnCmd12
 			// 
@@ -1092,6 +936,19 @@
 			this.btnCmd11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd11.UseVisualStyleBackColor = true;
 			// 
+			// btnCmd4
+			// 
+			this.btnCmd4.AutoEllipsis = true;
+			this.btnCmd4.Command = null;
+			this.btnCmd4.Location = new System.Drawing.Point(364, 150);
+			this.btnCmd4.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd4.Name = "btnCmd4";
+			this.btnCmd4.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd4.TabIndex = 24;
+			this.btnCmd4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd4, "Alt+4 to execute, INS or Right Mouse Button to define");
+			this.btnCmd4.UseVisualStyleBackColor = true;
+			// 
 			// btnCmd10
 			// 
 			this.btnCmd10.AutoEllipsis = true;
@@ -1104,99 +961,82 @@
 			this.btnCmd10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd10.UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// btnCmd2
 			// 
-			this.tabPage2.Controls.Add(this.btnCmd41);
-			this.tabPage2.Controls.Add(this.GPSIFIX_UPDATE);
-			this.tabPage2.Controls.Add(this.GPSIFIX_SGEE);
-			this.tabPage2.Controls.Add(this.GPSIFIX_CGEE);
-			this.tabPage2.Controls.Add(this.GPSIFIX_EN);
-			this.tabPage2.Controls.Add(this.btnCmd30);
-			this.tabPage2.Controls.Add(this.FTPGETIFIX_SIZE);
-			this.tabPage2.Controls.Add(this.FTPGETIFIX_NAME);
-			this.tabPage2.Controls.Add(this.GPSCMODE);
-			this.tabPage2.Controls.Add(this.GPSPS_PTF);
-			this.tabPage2.Controls.Add(this.GPSPS);
-			this.tabPage2.Controls.Add(this.GPSD);
-			this.tabPage2.Controls.Add(this.btnCmd40);
-			this.tabPage2.Controls.Add(this.btnCmd39);
-			this.tabPage2.Controls.Add(this.btnCmd38);
-			this.tabPage2.Controls.Add(this.btnCmd37);
-			this.tabPage2.Controls.Add(this.btnCmd36);
-			this.tabPage2.Controls.Add(this.btnCmd35);
-			this.tabPage2.Controls.Add(this.btnCmd21);
-			this.tabPage2.Controls.Add(this.btnCmd25);
-			this.tabPage2.Controls.Add(this.btnCmd26);
-			this.tabPage2.Controls.Add(this.btnCmd34);
-			this.tabPage2.Controls.Add(this.btnCmd27);
-			this.tabPage2.Controls.Add(this.btnCmd33);
-			this.tabPage2.Controls.Add(this.btnCmd32);
-			this.tabPage2.Controls.Add(this.btnCmd24);
-			this.tabPage2.Controls.Add(this.btnCmd31);
-			this.tabPage2.Controls.Add(this.btnCmd22);
-			this.tabPage2.Controls.Add(this.btnCmd20);
-			this.tabPage2.Controls.Add(this.btnCmd28);
-			this.tabPage2.Controls.Add(this.btnCmd29);
-			this.tabPage2.Controls.Add(this.btnCmd23);
-			this.tabPage2.Location = new System.Drawing.Point(4, 25);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(644, 332);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "GPS";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.btnCmd2.AutoEllipsis = true;
+			this.btnCmd2.Command = null;
+			this.btnCmd2.Location = new System.Drawing.Point(364, 94);
+			this.btnCmd2.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd2.Name = "btnCmd2";
+			this.btnCmd2.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd2.TabIndex = 22;
+			this.btnCmd2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd2, "Alt+2 to execute, INS or Right Mouse Button to define");
+			this.btnCmd2.UseVisualStyleBackColor = true;
 			// 
-			// GPSIFIX_UPDATE
+			// btnCmd0
 			// 
-			this.GPSIFIX_UPDATE.Location = new System.Drawing.Point(315, 291);
-			this.GPSIFIX_UPDATE.Maximum = new decimal(new int[] {
-            168,
-            0,
-            0,
-            0});
-			this.GPSIFIX_UPDATE.Name = "GPSIFIX_UPDATE";
-			this.GPSIFIX_UPDATE.Size = new System.Drawing.Size(50, 22);
-			this.GPSIFIX_UPDATE.TabIndex = 83;
-			this.GPSIFIX_UPDATE.ValueChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			this.btnCmd0.AutoEllipsis = true;
+			this.btnCmd0.Command = null;
+			this.btnCmd0.Location = new System.Drawing.Point(364, 38);
+			this.btnCmd0.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd0.Name = "btnCmd0";
+			this.btnCmd0.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd0.TabIndex = 20;
+			this.btnCmd0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd0, "Alt+0 to execute, INS or Right Mouse Button to define");
+			this.btnCmd0.UseVisualStyleBackColor = true;
 			// 
-			// GPSIFIX_SGEE
+			// btnCmd8
 			// 
-			this.GPSIFIX_SGEE.FormattingEnabled = true;
-			this.GPSIFIX_SGEE.Items.AddRange(new object[] {
-            "0",
-            "1"});
-			this.GPSIFIX_SGEE.Location = new System.Drawing.Point(268, 290);
-			this.GPSIFIX_SGEE.Name = "GPSIFIX_SGEE";
-			this.GPSIFIX_SGEE.Size = new System.Drawing.Size(41, 24);
-			this.GPSIFIX_SGEE.TabIndex = 82;
-			this.GPSIFIX_SGEE.Text = "0";
-			this.GPSIFIX_SGEE.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			this.btnCmd8.AutoEllipsis = true;
+			this.btnCmd8.Command = null;
+			this.btnCmd8.Location = new System.Drawing.Point(364, 262);
+			this.btnCmd8.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd8.Name = "btnCmd8";
+			this.btnCmd8.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd8.TabIndex = 28;
+			this.btnCmd8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd8, "Alt+8 to execute, INS or Right Mouse Button to define");
+			this.btnCmd8.UseVisualStyleBackColor = true;
 			// 
-			// GPSIFIX_CGEE
+			// btnCmd9
 			// 
-			this.GPSIFIX_CGEE.FormattingEnabled = true;
-			this.GPSIFIX_CGEE.Items.AddRange(new object[] {
-            "0",
-            "1"});
-			this.GPSIFIX_CGEE.Location = new System.Drawing.Point(221, 290);
-			this.GPSIFIX_CGEE.Name = "GPSIFIX_CGEE";
-			this.GPSIFIX_CGEE.Size = new System.Drawing.Size(41, 24);
-			this.GPSIFIX_CGEE.TabIndex = 81;
-			this.GPSIFIX_CGEE.Text = "0";
-			this.GPSIFIX_CGEE.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			this.btnCmd9.AutoEllipsis = true;
+			this.btnCmd9.Command = null;
+			this.btnCmd9.Location = new System.Drawing.Point(364, 290);
+			this.btnCmd9.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd9.Name = "btnCmd9";
+			this.btnCmd9.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd9.TabIndex = 29;
+			this.btnCmd9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd9, "Alt+9 to execute, INS or Right Mouse Button to define");
+			this.btnCmd9.UseVisualStyleBackColor = true;
 			// 
-			// GPSIFIX_EN
+			// btnCmd3
 			// 
-			this.GPSIFIX_EN.FormattingEnabled = true;
-			this.GPSIFIX_EN.Items.AddRange(new object[] {
-            "0",
-            "1"});
-			this.GPSIFIX_EN.Location = new System.Drawing.Point(174, 290);
-			this.GPSIFIX_EN.Name = "GPSIFIX_EN";
-			this.GPSIFIX_EN.Size = new System.Drawing.Size(41, 24);
-			this.GPSIFIX_EN.TabIndex = 80;
-			this.GPSIFIX_EN.Text = "0";
-			this.GPSIFIX_EN.SelectedIndexChanged += new System.EventHandler(this.GPSIFIX_EN_SelectedIndexChanged);
+			this.btnCmd3.AutoEllipsis = true;
+			this.btnCmd3.Command = null;
+			this.btnCmd3.Location = new System.Drawing.Point(364, 122);
+			this.btnCmd3.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd3.Name = "btnCmd3";
+			this.btnCmd3.Size = new System.Drawing.Size(133, 28);
+			this.btnCmd3.TabIndex = 23;
+			this.btnCmd3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnCmd3, "Alt+3 to execute, INS or Right Mouse Button to define");
+			this.btnCmd3.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd41
+			// 
+			this.btnCmd41.AutoEllipsis = true;
+			this.btnCmd41.Command = null;
+			this.btnCmd41.Location = new System.Drawing.Point(372, 287);
+			this.btnCmd41.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd41.Name = "btnCmd41";
+			this.btnCmd41.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd41.TabIndex = 84;
+			this.btnCmd41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd41.UseVisualStyleBackColor = true;
 			// 
 			// btnCmd30
 			// 
@@ -1209,94 +1049,6 @@
 			this.btnCmd30.TabIndex = 79;
 			this.btnCmd30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd30.UseVisualStyleBackColor = true;
-			// 
-			// FTPGETIFIX_SIZE
-			// 
-			this.FTPGETIFIX_SIZE.Location = new System.Drawing.Point(241, 263);
-			this.FTPGETIFIX_SIZE.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-			this.FTPGETIFIX_SIZE.Name = "FTPGETIFIX_SIZE";
-			this.FTPGETIFIX_SIZE.Size = new System.Drawing.Size(50, 22);
-			this.FTPGETIFIX_SIZE.TabIndex = 78;
-			this.FTPGETIFIX_SIZE.ValueChanged += new System.EventHandler(this.FTPGETIFIX_NAME_TextChanged);
-			// 
-			// FTPGETIFIX_NAME
-			// 
-			this.FTPGETIFIX_NAME.Location = new System.Drawing.Point(174, 234);
-			this.FTPGETIFIX_NAME.Name = "FTPGETIFIX_NAME";
-			this.FTPGETIFIX_NAME.Size = new System.Drawing.Size(117, 22);
-			this.FTPGETIFIX_NAME.TabIndex = 77;
-			this.FTPGETIFIX_NAME.TextChanged += new System.EventHandler(this.FTPGETIFIX_NAME_TextChanged);
-			// 
-			// GPSCMODE
-			// 
-			this.GPSCMODE.FormattingEnabled = true;
-			this.GPSCMODE.Items.AddRange(new object[] {
-            "0",
-            "1"});
-			this.GPSCMODE.Location = new System.Drawing.Point(539, 178);
-			this.GPSCMODE.Name = "GPSCMODE";
-			this.GPSCMODE.Size = new System.Drawing.Size(41, 24);
-			this.GPSCMODE.TabIndex = 76;
-			this.GPSCMODE.Text = "0";
-			this.GPSCMODE.SelectedIndexChanged += new System.EventHandler(this.GPSCMODE_SelectedIndexChanged);
-			// 
-			// GPSPS_PTF
-			// 
-			this.GPSPS_PTF.Increment = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-			this.GPSPS_PTF.Location = new System.Drawing.Point(221, 123);
-			this.GPSPS_PTF.Maximum = new decimal(new int[] {
-            36000,
-            0,
-            0,
-            0});
-			this.GPSPS_PTF.Name = "GPSPS_PTF";
-			this.GPSPS_PTF.Size = new System.Drawing.Size(70, 22);
-			this.GPSPS_PTF.TabIndex = 75;
-			this.GPSPS_PTF.Value = new decimal(new int[] {
-            1800,
-            0,
-            0,
-            0});
-			this.GPSPS_PTF.ValueChanged += new System.EventHandler(this.GPSPS_PTF_ValueChanged);
-			// 
-			// GPSPS
-			// 
-			this.GPSPS.FormattingEnabled = true;
-			this.GPSPS.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3"});
-			this.GPSPS.Location = new System.Drawing.Point(174, 122);
-			this.GPSPS.Name = "GPSPS";
-			this.GPSPS.Size = new System.Drawing.Size(41, 24);
-			this.GPSPS.TabIndex = 74;
-			this.GPSPS.Text = "0";
-			this.GPSPS.SelectedIndexChanged += new System.EventHandler(this.GPSPS_SelectedIndexChanged);
-			// 
-			// GPSD
-			// 
-			this.GPSD.FormattingEnabled = true;
-			this.GPSD.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4"});
-			this.GPSD.Location = new System.Drawing.Point(174, 10);
-			this.GPSD.Name = "GPSD";
-			this.GPSD.Size = new System.Drawing.Size(41, 24);
-			this.GPSD.TabIndex = 73;
-			this.GPSD.Text = "0";
-			this.GPSD.SelectedIndexChanged += new System.EventHandler(this.GPSD_SelectedIndexChanged);
 			// 
 			// btnCmd40
 			// 
@@ -1370,6 +1122,42 @@
 			this.btnCmd35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd35.UseVisualStyleBackColor = true;
 			// 
+			// btnCmd21
+			// 
+			this.btnCmd21.AutoEllipsis = true;
+			this.btnCmd21.Command = null;
+			this.btnCmd21.Location = new System.Drawing.Point(7, 35);
+			this.btnCmd21.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd21.Name = "btnCmd21";
+			this.btnCmd21.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd21.TabIndex = 54;
+			this.btnCmd21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd21.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd25
+			// 
+			this.btnCmd25.AutoEllipsis = true;
+			this.btnCmd25.Command = null;
+			this.btnCmd25.Location = new System.Drawing.Point(7, 147);
+			this.btnCmd25.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd25.Name = "btnCmd25";
+			this.btnCmd25.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd25.TabIndex = 58;
+			this.btnCmd25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd25.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd26
+			// 
+			this.btnCmd26.AutoEllipsis = true;
+			this.btnCmd26.Command = null;
+			this.btnCmd26.Location = new System.Drawing.Point(7, 175);
+			this.btnCmd26.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd26.Name = "btnCmd26";
+			this.btnCmd26.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd26.TabIndex = 59;
+			this.btnCmd26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd26.UseVisualStyleBackColor = true;
+			// 
 			// btnCmd34
 			// 
 			this.btnCmd34.AutoEllipsis = true;
@@ -1381,6 +1169,18 @@
 			this.btnCmd34.TabIndex = 66;
 			this.btnCmd34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd34.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd27
+			// 
+			this.btnCmd27.AutoEllipsis = true;
+			this.btnCmd27.Command = null;
+			this.btnCmd27.Location = new System.Drawing.Point(7, 203);
+			this.btnCmd27.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd27.Name = "btnCmd27";
+			this.btnCmd27.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd27.TabIndex = 60;
+			this.btnCmd27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd27.UseVisualStyleBackColor = true;
 			// 
 			// btnCmd33
 			// 
@@ -1406,6 +1206,18 @@
 			this.btnCmd32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd32.UseVisualStyleBackColor = true;
 			// 
+			// btnCmd24
+			// 
+			this.btnCmd24.AutoEllipsis = true;
+			this.btnCmd24.Command = null;
+			this.btnCmd24.Location = new System.Drawing.Point(7, 119);
+			this.btnCmd24.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd24.Name = "btnCmd24";
+			this.btnCmd24.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd24.TabIndex = 57;
+			this.btnCmd24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd24.UseVisualStyleBackColor = true;
+			// 
 			// btnCmd31
 			// 
 			this.btnCmd31.AutoEllipsis = true;
@@ -1417,6 +1229,18 @@
 			this.btnCmd31.TabIndex = 63;
 			this.btnCmd31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd31.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd22
+			// 
+			this.btnCmd22.AutoEllipsis = true;
+			this.btnCmd22.Command = null;
+			this.btnCmd22.Location = new System.Drawing.Point(7, 63);
+			this.btnCmd22.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd22.Name = "btnCmd22";
+			this.btnCmd22.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd22.TabIndex = 55;
+			this.btnCmd22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd22.UseVisualStyleBackColor = true;
 			// 
 			// btnCmd20
 			// 
@@ -1430,6 +1254,42 @@
 			this.btnCmd20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnCmd20.UseVisualStyleBackColor = true;
 			// 
+			// btnCmd28
+			// 
+			this.btnCmd28.AutoEllipsis = true;
+			this.btnCmd28.Command = null;
+			this.btnCmd28.Location = new System.Drawing.Point(7, 231);
+			this.btnCmd28.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd28.Name = "btnCmd28";
+			this.btnCmd28.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd28.TabIndex = 61;
+			this.btnCmd28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd28.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd29
+			// 
+			this.btnCmd29.AutoEllipsis = true;
+			this.btnCmd29.Command = null;
+			this.btnCmd29.Location = new System.Drawing.Point(7, 259);
+			this.btnCmd29.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd29.Name = "btnCmd29";
+			this.btnCmd29.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd29.TabIndex = 62;
+			this.btnCmd29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd29.UseVisualStyleBackColor = true;
+			// 
+			// btnCmd23
+			// 
+			this.btnCmd23.AutoEllipsis = true;
+			this.btnCmd23.Command = null;
+			this.btnCmd23.Location = new System.Drawing.Point(7, 91);
+			this.btnCmd23.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCmd23.Name = "btnCmd23";
+			this.btnCmd23.Size = new System.Drawing.Size(160, 28);
+			this.btnCmd23.TabIndex = 56;
+			this.btnCmd23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnCmd23.UseVisualStyleBackColor = true;
+			// 
 			// btnSelectCompiler
 			// 
 			this.btnSelectCompiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1441,6 +1301,19 @@
 			this.btnSelectCompiler.Text = "...";
 			this.btnSelectCompiler.UseVisualStyleBackColor = true;
 			this.btnSelectCompiler.Click += new System.EventHandler(this.btnSelectCompiler_Click);
+			// 
+			// btnClearLog
+			// 
+			this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClearLog.Location = new System.Drawing.Point(1141, 5);
+			this.btnClearLog.Margin = new System.Windows.Forms.Padding(4);
+			this.btnClearLog.Name = "btnClearLog";
+			this.btnClearLog.Size = new System.Drawing.Size(100, 28);
+			this.btnClearLog.TabIndex = 29;
+			this.btnClearLog.Text = "Clear &Log";
+			this.toolTip.SetToolTip(this.btnClearLog, "AT#LSCRIPT");
+			this.btnClearLog.UseVisualStyleBackColor = true;
+			this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
 			// 
 			// btnEdit
 			// 
@@ -1465,6 +1338,42 @@
 			this.btnSelectEditor.Text = "...";
 			this.btnSelectEditor.UseVisualStyleBackColor = true;
 			this.btnSelectEditor.Click += new System.EventHandler(this.btnSelectEditor_Click);
+			// 
+			// btnExecute
+			// 
+			this.btnExecute.Location = new System.Drawing.Point(277, 563);
+			this.btnExecute.Margin = new System.Windows.Forms.Padding(4);
+			this.btnExecute.Name = "btnExecute";
+			this.btnExecute.Size = new System.Drawing.Size(120, 28);
+			this.btnExecute.TabIndex = 17;
+			this.btnExecute.Text = "F8 - Execute";
+			this.toolTip.SetToolTip(this.btnExecute, "AT#EXECSCR");
+			this.btnExecute.UseVisualStyleBackColor = true;
+			this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+			// 
+			// btnStartMode
+			// 
+			this.btnStartMode.Location = new System.Drawing.Point(277, 620);
+			this.btnStartMode.Margin = new System.Windows.Forms.Padding(4);
+			this.btnStartMode.Name = "btnStartMode";
+			this.btnStartMode.Size = new System.Drawing.Size(120, 28);
+			this.btnStartMode.TabIndex = 19;
+			this.btnStartMode.Text = "Start Mode 1,10";
+			this.toolTip.SetToolTip(this.btnStartMode, "AT#STARTMODESCR=1,10");
+			this.btnStartMode.UseVisualStyleBackColor = true;
+			this.btnStartMode.Click += new System.EventHandler(this.btnStartMode_Click);
+			// 
+			// btnSetActive
+			// 
+			this.btnSetActive.Location = new System.Drawing.Point(277, 591);
+			this.btnSetActive.Margin = new System.Windows.Forms.Padding(4);
+			this.btnSetActive.Name = "btnSetActive";
+			this.btnSetActive.Size = new System.Drawing.Size(120, 28);
+			this.btnSetActive.TabIndex = 18;
+			this.btnSetActive.Text = "F7 -Set Active";
+			this.toolTip.SetToolTip(this.btnSetActive, "AT#ESCRIPT");
+			this.btnSetActive.UseVisualStyleBackColor = true;
+			this.btnSetActive.Click += new System.EventHandler(this.btnSetActive_Click);
 			// 
 			// btnExit
 			// 
@@ -1491,6 +1400,130 @@
 			this.log.Size = new System.Drawing.Size(572, 706);
 			this.log.TabIndex = 30;
 			this.log.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.log_KeyPress);
+			// 
+			// filesDevice
+			// 
+			this.filesDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.filesDevice.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+			this.filesDevice.ContextMenuStrip = this.filesDeviceCntxMenu;
+			this.filesDevice.FullRowSelect = true;
+			this.filesDevice.HideSelection = false;
+			this.filesDevice.Location = new System.Drawing.Point(448, 404);
+			this.filesDevice.Margin = new System.Windows.Forms.Padding(4);
+			this.filesDevice.MultiSelect = false;
+			this.filesDevice.Name = "filesDevice";
+			this.filesDevice.Size = new System.Drawing.Size(212, 276);
+			this.filesDevice.TabIndex = 13;
+			this.filesDevice.UseCompatibleStateImageBehavior = false;
+			this.filesDevice.View = System.Windows.Forms.View.Details;
+			this.filesDevice.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox_KeyUp);
+			this.filesDevice.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseUp);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "Name";
+			this.columnHeader1.Width = 120;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Size";
+			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// filesHost
+			// 
+			this.filesHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.filesHost.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+			this.filesHost.ContextMenuStrip = this.filesHostCntxMenu;
+			this.filesHost.FullRowSelect = true;
+			listViewGroup1.Header = "Python files";
+			listViewGroup1.Name = "leftGroup0";
+			listViewGroup1.Tag = ".PY";
+			listViewGroup2.Header = "Python compiled";
+			listViewGroup2.Name = "leftGroup1";
+			listViewGroup2.Tag = ".PYO";
+			listViewGroup3.Header = "Other";
+			listViewGroup3.Name = "leftGroup2";
+			this.filesHost.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
+			this.filesHost.HideSelection = false;
+			this.filesHost.Location = new System.Drawing.Point(10, 404);
+			this.filesHost.Margin = new System.Windows.Forms.Padding(4);
+			this.filesHost.Name = "filesHost";
+			this.filesHost.Size = new System.Drawing.Size(212, 276);
+			this.filesHost.TabIndex = 5;
+			this.filesHost.UseCompatibleStateImageBehavior = false;
+			this.filesHost.View = System.Windows.Forms.View.Details;
+			this.filesHost.DoubleClick += new System.EventHandler(this.files_DoubleClick);
+			this.filesHost.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox_KeyUp);
+			this.filesHost.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseUp);
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "Name";
+			this.columnHeader3.Width = 120;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Size";
+			this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// btnDelete
+			// 
+			this.btnDelete.Location = new System.Drawing.Point(340, 433);
+			this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+			this.btnDelete.Name = "btnDelete";
+			this.btnDelete.Size = new System.Drawing.Size(100, 28);
+			this.btnDelete.TabIndex = 15;
+			this.btnDelete.Text = "Delete";
+			this.toolTip.SetToolTip(this.btnDelete, "AT#DSCRIPT ...");
+			this.btnDelete.UseVisualStyleBackColor = true;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+			// 
+			// btnDownload
+			// 
+			this.btnDownload.Location = new System.Drawing.Point(340, 489);
+			this.btnDownload.Margin = new System.Windows.Forms.Padding(4);
+			this.btnDownload.Name = "btnDownload";
+			this.btnDownload.Size = new System.Drawing.Size(100, 28);
+			this.btnDownload.TabIndex = 16;
+			this.btnDownload.Text = "&Download <";
+			this.btnDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.toolTip.SetToolTip(this.btnDownload, "AT#RSCRIPT ...");
+			this.btnDownload.UseVisualStyleBackColor = true;
+			this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
+			// 
+			// btnRefreshDevice
+			// 
+			this.btnRefreshDevice.Location = new System.Drawing.Point(340, 404);
+			this.btnRefreshDevice.Margin = new System.Windows.Forms.Padding(4);
+			this.btnRefreshDevice.Name = "btnRefreshDevice";
+			this.btnRefreshDevice.Size = new System.Drawing.Size(100, 28);
+			this.btnRefreshDevice.TabIndex = 14;
+			this.btnRefreshDevice.Text = "Refresh";
+			this.toolTip.SetToolTip(this.btnRefreshDevice, "AT#LSCRIPT");
+			this.btnRefreshDevice.UseVisualStyleBackColor = true;
+			this.btnRefreshDevice.Click += new System.EventHandler(this.btnRefreshDevice_Click);
+			// 
+			// btnUpload
+			// 
+			this.btnUpload.Location = new System.Drawing.Point(232, 489);
+			this.btnUpload.Margin = new System.Windows.Forms.Padding(4);
+			this.btnUpload.Name = "btnUpload";
+			this.btnUpload.Size = new System.Drawing.Size(100, 28);
+			this.btnUpload.TabIndex = 9;
+			this.btnUpload.Text = "F6 - &Upload >";
+			this.btnUpload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip.SetToolTip(this.btnUpload, "AT#WSCRIPT ...");
+			this.btnUpload.UseVisualStyleBackColor = true;
+			this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
 			// 
 			// btnCompile
 			// 
@@ -1526,18 +1559,6 @@
 			this.btnSelect.Text = "...";
 			this.btnSelect.UseVisualStyleBackColor = true;
 			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
-			// 
-			// btnCmd41
-			// 
-			this.btnCmd41.AutoEllipsis = true;
-			this.btnCmd41.Command = null;
-			this.btnCmd41.Location = new System.Drawing.Point(372, 287);
-			this.btnCmd41.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCmd41.Name = "btnCmd41";
-			this.btnCmd41.Size = new System.Drawing.Size(160, 28);
-			this.btnCmd41.TabIndex = 84;
-			this.btnCmd41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnCmd41.UseVisualStyleBackColor = true;
 			// 
 			// XTerminal
 			// 
@@ -1613,10 +1634,10 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox folderSelected;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.ListView filesHost;
+		private ListViewEx filesHost;
 		private System.Windows.Forms.FolderBrowserDialog folderDialog;
 		private System.Windows.Forms.TextBox compiler;
-		private System.Windows.Forms.ListView filesDevice;
+		private ListViewEx filesDevice;
 		private System.Windows.Forms.ToolTip toolTip;
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private TextBoxEx log;
