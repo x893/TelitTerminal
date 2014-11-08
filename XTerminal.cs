@@ -16,6 +16,7 @@ namespace TelitTerminal
 {
 	public partial class XTerminal : Form
 	{
+		#region Private vatiables
 		private const string PYTHON_INSTALL_KEY = @"SOFTWARE\Python\PythonCore\1.5\InstallPath";
 		private const string CMD_LSCRIPT = "#LSCRIPT:";
 
@@ -39,30 +40,34 @@ namespace TelitTerminal
 		private bool readBinary = false;
 		private string bufferData = string.Empty;
 
-		private int windowX, windowY, windowW, windowH;
 		private CultureInfo cultureInfo = CultureInfo.InvariantCulture;
 		private Settings settings = null;
-		private ButtonDefinition button_def = new ButtonDefinition();
-		private EventHandler btnCmd_Click_handler;
-		private KeyEventHandler defineCmd_KeyUp_handler;
-		private MouseEventHandler defineCmd_handler;
+		private ButtonDefinition ButtonDefEdit = new ButtonDefinition();
+		private EventHandler CmdButton_Click_handler;
+		private KeyEventHandler CmdButton_KeyUp_handler;
+		private MouseEventHandler CmdButton_MouseUp_handler;
+
+		private FileSystemWatcher watcher;
+
+		#endregion
+
 		public XTerminal()
 		{
 			InitializeComponent();
 		}
 
-		#region frmMain_Load(...) 
-		private void frmMain_Load(object sender, EventArgs e)
+		#region XTerminal_Load(...)
+		private void XTerminal_Load(object sender, EventArgs e)
 		{
-			loadSettings();
+			LoadSettings();
 			loadPorts();
 			folderSelected.Text = folder.Trim();
 			loadFolder();
 
-			btnCmd_Click_handler = new EventHandler(btnCmd_Click);
-			defineCmd_KeyUp_handler = new KeyEventHandler(defineCmd_KeyUp);
-			defineCmd_handler = new MouseEventHandler(defineCmd);
-			setXButtons(this.Controls);
+			CmdButton_Click_handler = new EventHandler(CmdButton_Click);
+			CmdButton_KeyUp_handler = new KeyEventHandler(CmdButton_KeyUp);
+			CmdButton_MouseUp_handler = new MouseEventHandler(CmdButton_MouseUp);
+			setXButtons(Controls);
 
 			pythonPath = pythonExe = string.Empty;
 
@@ -106,20 +111,21 @@ namespace TelitTerminal
 				btnCompile.Enabled = true;
 
 			cbWordWrap_CheckedChanged(sender, e);
+
+			CIBAUD.Items.Clear();
+			foreach (string baud in cbSpeed.Items)
+				CIBAUD.Items.Add(baud);
+			CIBAUD.SelectedIndex = cbSpeed.SelectedIndex;
+
 		}
 
 		private void setXButtons(Control.ControlCollection controlCollection)
 		{
-			foreach (Control control in controlCollection)
+			foreach (CmdButton cmd in CmdButtons(Controls))
 			{
-				if (control is XButton)
-				{
-					control.Click += btnCmd_Click_handler;
-					control.KeyUp += defineCmd_KeyUp_handler;
-					control.MouseUp += defineCmd_handler;
-				}
-				else if (control.HasChildren)
-					setXButtons(control.Controls);
+				cmd.Click += CmdButton_Click_handler;
+				cmd.KeyUp += CmdButton_KeyUp_handler;
+				cmd.MouseUp += CmdButton_MouseUp_handler;
 			}
 		}
 
@@ -165,16 +171,17 @@ namespace TelitTerminal
 		}
 		#endregion
 
-		#region formClosing(...)
+		#region XTerminal_Closing(...)
 		/// <summary>
 		/// Form closing. Save settings and exit on success.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void formClosing(object sender, FormClosingEventArgs e)
+		private void XTerminal_Closing(object sender, FormClosingEventArgs e)
 		{
 			disconnect();
-			if (!saveSettings() && MessageBox.Show("Settings not save.\n\nExit anyway ?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+			if (!SaveSettings() &&
+				MessageBox.Show("Settings not save.\n\nExit anyway ?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
 				e.Cancel = true;
 		}
 		#endregion
@@ -185,9 +192,6 @@ namespace TelitTerminal
 		{
 			loadFolder(string.Empty);
 		}
-
-		private string watchFolder;
-		private FileSystemWatcher watcher;
 
 		private void loadFolder(string skip)
 		{
@@ -328,7 +332,7 @@ namespace TelitTerminal
 				{
 					try
 					{
-						if (cbDTR.Checked)
+						if (DTR.Checked)
 							serialPort.DtrEnable = false;
 						serialPort.Close();
 					}
@@ -347,11 +351,12 @@ namespace TelitTerminal
 		{
 			return Path.Combine(Application.StartupPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath) + ".cfg");
 		}
-		#region loadSettings() 
+
+		#region LoadSettings() 
 		/// <summary>
 		/// Load settings from user.settings file
 		/// </summary>
-		private void loadSettings()
+		private void LoadSettings()
 		{
 			try
 			{
@@ -368,38 +373,96 @@ namespace TelitTerminal
 			protocol = settings.Protocol;
 			folder = settings.Folder;
 
-			foreach (CmdButton cmd in CmdButtons(this.Controls))
-				setCmdUser(cmd, settings.GetCommand(cmd.Index));
-			
-			cbDTR.Checked = settings.DTR;
+			if (settings.Commands != null)
+				foreach (CmdButton cmd in CmdButtons(Controls))
+				{
+					string text = settings.GetCommand(cmd.Index);
+					cmd.Text = text;
+					cmd.Command = text;
+					cmd.Template = string.Empty;
+					toolTip.SetToolTip(cmd, null);
+				}
+
+			foreach (CommandEx cmd in settings.CommandsEx)
+			{
+				cmd.Name = (cmd.Name ?? string.Empty).Trim();
+				string text = cmd.Text = (cmd.Text ?? string.Empty).Trim();
+
+				if (!string.IsNullOrEmpty(cmd.Name) && !string.IsNullOrEmpty(text))
+				{
+					CmdButton cb = FindCmdButton(Controls, cmd.Name);
+					if (cb != null)
+					{
+						cb.Text = text;
+						cb.Command = cmd.Command;
+						if (string.IsNullOrEmpty(cb.Command))
+							cb.Command = text;
+						cb.Template = cmd.Template;
+						toolTip.SetToolTip(cb, cmd.ToolTip);
+					}
+				}
+			}
+
+			foreach (CmdButton cmd in CmdButtons(Controls))
+				SetTextCommand(cmd);
+
+			DTR.Checked = settings.DTR;
+			RTS.Checked = settings.RTS;
+			CRorCRLF.Checked = settings.CRorCRLF;
+			Echo.Checked = settings.Echo;
+			WordWrap.Checked = settings.WordWrap;
+			AutoLSCRIPT.Checked = settings.AutoLSCRIPT;
+
 			editor.Text = settings.Editor;
 			compiler.Text = settings.Compiler;
 
-			windowX = settings.WindowX;
-			windowY = settings.WindowY;
-			windowW = settings.WindowW;
-			windowH = settings.WindowH;
-			if (windowW > 0 && windowH > 0)
+			if (settings.Width > 0 &&
+				settings.Height > 0 &&
+				(Width != settings.Width || Height != settings.Height)
+				)
 			{
-				this.Width = windowW;
-				this.Height = windowH;
-				this.Location = new Point(windowX, windowY);
+				Width = settings.Width;
+				Height = settings.Height;
 			}
-			cbEcho.Checked = settings.Echo;
-			cbWordWrap.Checked = settings.WordWrap;
-			cbLSCRIPT.Checked = settings.AutoLSCRIPT;
 		}
 
-		private void setCmdUser(CmdButton cmd, string text)
+		private CmdButton FindCmdButton(Control.ControlCollection controls, string name)
 		{
-			cmd.Text = text.Replace("&", "&&");
-			cmd.Command = text;
-			if (!string.IsNullOrEmpty(text))
+			foreach (Control c in controls)
 			{
-				if (cmd.Index >= 0 && cmd.Index <= 9)
+				if (c is CmdButton)
+				{
+					if (c.Name == name)
+						return c as CmdButton;
+				}
+				else if (c.HasChildren)
+				{
+					CmdButton cb = FindCmdButton(c.Controls, name);
+					if (cb != null)
+						return cb;
+				}
+			}
+			return null;
+		}
+		/*
+		private void SetCmdUserText(CmdButton cmd, string text)
+		{
+			text = text ?? string.Empty;
+			if (string.IsNullOrEmpty(text))
+			{
+				text = cmd.Text;
+				cmd.Command = text;
+			}
+			else
+			{
+				cmd.Text = text.Replace("&", "&&");
+				cmd.Command = text;
+				if (!string.IsNullOrEmpty(text) && cmd.Index >= 0 && cmd.Index <= 9)
 					cmd.Text = string.Format("({0}) - ", cmd.Index) + cmd.Text;
 			}
+			toolTip.SetToolTip(cmd, string.IsNullOrEmpty(cmd.Text) ? null : cmd.Text);
 		}
+		*/
 		#endregion
 
 		private IEnumerable<CmdButton> CmdButtons(Control.ControlCollection controls)
@@ -416,12 +479,12 @@ namespace TelitTerminal
 			}
 		}
 
-		#region saveSettings()
+		#region SaveSettings()
 		/// <summary>
 		/// Save settings to file if any changes.
 		/// </summary>
 		/// <returns>True on success, False if fail.</returns>
-		private bool saveSettings()
+		private bool SaveSettings()
 		{
 			if (settings == null)
 				return true;
@@ -435,17 +498,22 @@ namespace TelitTerminal
 			change |= (folder != settings.Folder);
 			change |= (editor.Text != settings.Editor);
 			change |= (compiler.Text != settings.Compiler);
-			change |= (cbDTR.Checked != settings.DTR);
-			change |= (this.Location.X != settings.WindowX);
-			change |= (this.Location.Y != settings.WindowY);
-			change |= (this.Width != settings.WindowW);
-			change |= (this.Height != settings.WindowH);
-			change |= (cbEcho.Checked != settings.Echo);
-			change |= (cbWordWrap.Checked != settings.WordWrap);
-			change |= (cbLSCRIPT.Checked != settings.AutoLSCRIPT);
+			change |= (DTR.Checked != settings.DTR);
+			change |= (RTS.Checked != settings.RTS);
+			change |= (CRorCRLF.Checked != settings.CRorCRLF);
+			change |= (Width != settings.Width);
+			change |= (Height != settings.Height);
+			change |= (Echo.Checked != settings.Echo);
+			change |= (WordWrap.Checked != settings.WordWrap);
+			change |= (AutoLSCRIPT.Checked != settings.AutoLSCRIPT);
 
-			foreach(CmdButton cmd in CmdButtons(this.Controls))
-				change |= (cmd.Command != settings.GetCommand(cmd.Index));
+			if (!change)
+				foreach (CmdButton cmd in CmdButtons(Controls))
+					if (cmd.Text.Trim().Length > 0)
+					{
+						CommandEx cx = settings.FindCommandEx(cmd);
+						change |= (cx == null || cx.Changed(cmd));
+					}
 
 			if (change)
 			{
@@ -455,21 +523,25 @@ namespace TelitTerminal
 				settings.Folder = folder;
 				settings.Editor = editor.Text;
 				settings.Compiler = compiler.Text;
-				settings.DTR = cbDTR.Checked;
-				settings.WindowX = this.Location.X;
-				settings.WindowY = this.Location.Y;
-				settings.WindowW = this.Width;
-				settings.WindowH = this.Height;
-				settings.Echo = cbEcho.Checked;
-				settings.WordWrap = cbWordWrap.Checked;
-				settings.AutoLSCRIPT = cbLSCRIPT.Checked;
+				settings.DTR = DTR.Checked;
+				settings.RTS = RTS.Checked;
+				settings.CRorCRLF = CRorCRLF.Checked;
+				settings.Echo = Echo.Checked;
+				settings.WordWrap = WordWrap.Checked;
+				settings.AutoLSCRIPT = AutoLSCRIPT.Checked;
+				settings.Width = Width;
+				settings.Height = Height;
 
 				try
 				{
-					foreach (CmdButton cmd in CmdButtons(this.Controls))
-						settings.SetCommand(cmd.Index, cmd.Command);
+					settings.CommandsEx.Clear();
+					settings.Commands = null;
+					foreach (CmdButton cmd in CmdButtons(Controls))
+					{
+						if (cmd.Text.Trim().Length > 0)
+							settings.CommandsEx.Add(new CommandEx(cmd, toolTip.GetToolTip(cmd)));
+					}
 					msg = Settings.Save(getSettingFile(), settings);
-						
 				}
 				catch (Exception ex)
 				{
@@ -523,29 +595,29 @@ namespace TelitTerminal
 
 		private bool setProtocol(string new_protocol)
 		{
-			cbProtocol.SelectedIndex = -1;
+			FlowProtocol.SelectedIndex = -1;
 			if (!string.IsNullOrEmpty(protocol))
 			{
-				for (int i = 0; i < cbProtocol.Items.Count; i++)
+				for (int i = 0; i < FlowProtocol.Items.Count; i++)
 				{
-					string item = cbProtocol.Items[i] as string;
+					string item = FlowProtocol.Items[i] as string;
 					switch (item)
 					{
 						case "Hardware":
 							if (new_protocol == "RTS")
-								cbProtocol.SelectedIndex = i;
+								FlowProtocol.SelectedIndex = i;
 							break;
 						case "None":
 							if (new_protocol == "none")
-								cbProtocol.SelectedIndex = i;
+								FlowProtocol.SelectedIndex = i;
 							break;
 						default:
 							continue;
 					}
-					if (cbProtocol.SelectedIndex >= 0)
+					if (FlowProtocol.SelectedIndex >= 0)
 						break;
 				}
-				if (cbProtocol.SelectedIndex >= 0)
+				if (FlowProtocol.SelectedIndex >= 0)
 				{
 					protocol = new_protocol;
 					return true;
@@ -728,13 +800,13 @@ namespace TelitTerminal
 			{
 				try
 				{
-					if (cbEcho.Checked)
+					if (Echo.Checked)
 					{
 						AppendToLog(data);
 						AppendToLog("\r\n");
 					}
 					serialPort.WriteTimeout = 1000;
-					serialPort.Write(data + "\r\n");
+					serialPort.Write(string.Concat(data, CRorCRLF.Checked ? "\r\n" : "\r"));
 				}
 				catch (InvalidOperationException ex)
 				{
@@ -755,7 +827,29 @@ namespace TelitTerminal
 		}
 		#endregion
 
-		#region port_DataReceived(...) 
+		#region port_ErrorReceived
+		private void port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+		{
+			if (e.EventType == SerialError.Frame)
+			{
+				disconnect();
+			}
+			else if (e.EventType == SerialError.Overrun)
+			{
+			}
+			else if (e.EventType == SerialError.RXOver)
+			{
+			}
+			else if (e.EventType == SerialError.RXParity)
+			{
+			}
+			else if (e.EventType == SerialError.TXFull)
+			{
+			}
+		}
+		#endregion
+
+		#region port_DataReceived(...)
 		/// <summary>
 		/// COM port recieve data handler.
 		/// </summary>
@@ -823,7 +917,7 @@ namespace TelitTerminal
 
 		private bool connect()
 		{
-			return connect(cbLSCRIPT.Checked);
+			return connect(AutoLSCRIPT.Checked);
 		}
 
 		private bool connect(bool lscript)
@@ -845,21 +939,11 @@ namespace TelitTerminal
 				baud = int.Parse(cbSpeed.Items[cbSpeed.SelectedIndex] as string, cultureInfo);
 				serialPort.BaudRate = baud;
 				serialPort.Parity = Parity.None;
-				serialPort.DtrEnable = true;
-				protocol = cbProtocol.Items[cbProtocol.SelectedIndex] as string;
-				switch (protocol)
-				{
-					case "Hardware":
-						serialPort.Handshake = Handshake.RequestToSend;
-						protocol = "RTS";
-						break;
-					case "None":
-						serialPort.Handshake = Handshake.None;
-						protocol = "none";
-						break;
-				}
-				serialPort.StopBits = StopBits.Two;
+				serialPort.DtrEnable = DTR.Checked;
+				cbProtocol_SelectedIndexChanged(this, EventArgs.Empty);
+				serialPort.StopBits = StopBits.One;
 				serialPort.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+				serialPort.ErrorReceived += new SerialErrorReceivedEventHandler(port_ErrorReceived);
 				serialPort.Open();
 			}
 			catch (Exception ex)
@@ -947,8 +1031,18 @@ namespace TelitTerminal
 		}
 		#endregion
 
+		#region cbDTR_CheckedChanged
+		private void cbDTR_CheckedChanged(object sender, EventArgs e)
+		{
+			if (serialPort != null && serialPort.IsOpen)
+			{
+				serialPort.DtrEnable = DTR.Checked;
+			}
+		}
+		#endregion
+
 		#region btnCmd_Click(...)
-		private void btnCmd_Click(object sender, EventArgs e)
+		private void CmdButton_Click(object sender, EventArgs e)
 		{
 			CmdButton cmd = sender as CmdButton;
 			if (cmd != null)
@@ -1332,12 +1426,12 @@ namespace TelitTerminal
 		{
 			if (serialPort != null && serialPort.IsOpen)
 			{
-				if (e.KeyChar == '\r')
+				if (e.KeyChar == '\r' && CRorCRLF.Checked)
 					serialPort.Write("\r\n");
 				else
 					serialPort.Write(e.KeyChar.ToString());
 			}
-			if (!cbEcho.Checked)
+			if (!Echo.Checked)
 				e.Handled = true;
 		}
 		#endregion
@@ -1521,8 +1615,8 @@ namespace TelitTerminal
 		}
 		#endregion
 
-		#region form_KeyUp(object sender, KeyEventArgs e) 
-		private void form_KeyUp(object sender, KeyEventArgs e)
+		#region XTerminal_KeyUp(object sender, KeyEventArgs e)
+		private void XTerminal_KeyUp(object sender, KeyEventArgs e)
 		{
 			Keys c = e.KeyCode;
 			if (e.Alt && !e.Shift && !e.Control)
@@ -1646,66 +1740,82 @@ namespace TelitTerminal
 		#region cbWordWrap_CheckedChanged(object sender, EventArgs e) 
 		private void cbWordWrap_CheckedChanged(object sender, EventArgs e)
 		{
-			log.WordWrap = cbWordWrap.Checked;
+			log.WordWrap = WordWrap.Checked;
 		}
 		#endregion
 
 		#region defineCmd(object sender, MouseEventArgs e) 
-		private void defineCmd(object sender, MouseEventArgs e)
+		private void CmdButton_MouseUp(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
-			{
-				prepareCmdEdit(sender as CmdButton);
-			}
+				PrepareCmdEdit(sender as CmdButton);
 		}
-		private void defineCmd_KeyUp(object sender, KeyEventArgs e)
+		private void CmdButton_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Insert)
 			{
 				e.Handled = true;
-				prepareCmdEdit(sender as CmdButton);
+				PrepareCmdEdit(sender as CmdButton);
 			}
 		}
 
-		private void prepareCmdEdit(CmdButton cmd)
+		private void PrepareCmdEdit(CmdButton cmd)
 		{
 			if (cmd != null)
 			{
-				cancelCmdEdit();
-				button_def.Xbutton = cmd;
-				button_def.CmdText = cmd.Command;
+				CancelCmdEdit();
+				ButtonDefEdit.Xbutton = cmd;
+				ButtonDefEdit.CmdText = cmd.Text;
+				ButtonDefEdit.CmdCommand = cmd.Command;
+				ButtonDefEdit.CmdTemplate = cmd.Template;
+				ButtonDefEdit.CmdToolTip = toolTip.GetToolTip(cmd);
+
 				cmd.BackColor = Color.FromKnownColor(KnownColor.ActiveCaption);
 
-				if (button_def.ShowDialog() == DialogResult.OK)
+				if (ButtonDefEdit.ShowDialog() == DialogResult.OK)
 				{
 					cmd.BackColor = Color.FromKnownColor(KnownColor.Control);
 					cmd.UseVisualStyleBackColor = true;
 					cmd.Focus();
 
-					setCmdUser(cmd, button_def.CmdText.Trim());
+					cmd.Text = ButtonDefEdit.CmdText;
+					cmd.Command = ButtonDefEdit.CmdCommand;
+					SetTextCommand(cmd);
+					cmd.Template = ButtonDefEdit.CmdTemplate;
+					toolTip.SetToolTip(cmd, ButtonDefEdit.CmdToolTip);
+					if (string.IsNullOrEmpty(cmd.Command))
+						cmd.Command = cmd.Text;
 				}
 				else
 				{
-					cancelCmdEdit();
+					CancelCmdEdit();
 				}
 
 			}
 		}
+
+		private void SetTextCommand(CmdButton cmd)
+		{
+			if (string.IsNullOrEmpty(cmd.Command))
+				cmd.Command = cmd.Text;
+			else if (string.IsNullOrEmpty(cmd.Text))
+				cmd.Text = cmd.Command;
+		}
 		#endregion
 
 		#region cancelCmdEdit() 
-		private void cancelCmdEdit()
+		private void CancelCmdEdit()
 		{
-			if (button_def.Xbutton != null)
+			if (ButtonDefEdit.Xbutton != null)
 			{
-				XButton cmd = button_def.Xbutton;
+				XButton cmd = ButtonDefEdit.Xbutton;
 				cmd.BackColor = Color.FromKnownColor(KnownColor.Control);
 				cmd.UseVisualStyleBackColor = true;
 				cmd.Focus();
 			}
 			else
 				this.Focus();
-			button_def.Xbutton = null;
+			ButtonDefEdit.Xbutton = null;
 		}
 		#endregion
 
@@ -1750,15 +1860,15 @@ namespace TelitTerminal
 
 		private void GPSD_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setCmdUser(btnCmd20, "AT$GPSD=" + GPSD.Text);
+			SetCmdValue(btnCmd20, GPSD.Text);
 		}
 
 		private void GPSPS_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (GPSPS.Text == "2")
-				setCmdUser(btnCmd24, "AT$GPSPS=" + GPSPS.Text + "," + GPSPS_PTF.Value.ToString("#", CultureInfo.InstalledUICulture));
+				SetCmdValue(btnCmd24, GPSPS.Text + "," + GPSPS_PTF.Value.ToString("#", CultureInfo.InstalledUICulture));
 			else
-				setCmdUser(btnCmd24, "AT$GPSPS=" + GPSPS.Text);
+				SetCmdValue(btnCmd24, GPSPS.Text);
 		}
 
 		private void GPSPS_PTF_ValueChanged(object sender, EventArgs e)
@@ -1768,29 +1878,96 @@ namespace TelitTerminal
 
 		private void GPSCMODE_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setCmdUser(btnCmd37, "AT$GPSCMODE=" + GPSCMODE.Text);
+			SetCmdValue(btnCmd37, GPSCMODE.Text);
 		}
 
 		private void FTPGETIFIX_NAME_TextChanged(object sender, EventArgs e)
 		{
-			string cmd = "AT$FTPGETIFIX=";
+			string cmd = string.Empty;
 			if (!string.IsNullOrEmpty(FTPGETIFIX_NAME.Text))
 				cmd += FTPGETIFIX_NAME.Text;
 			if (FTPGETIFIX_SIZE.Value > 0)
 				cmd += "," + FTPGETIFIX_SIZE.Value.ToString("#", CultureInfo.InstalledUICulture);
-			setCmdUser(btnCmd28, cmd);
+			SetCmdValue(btnCmd28, cmd);
 		}
 
 		private void GPSIFIX_EN_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			string cmd = "AT$GPSIFIX=" + GPSIFIX_EN.Text;
+			string cmd = GPSIFIX_EN.Text;
 			if (GPSIFIX_EN.Text == "1")
 			{
 				cmd += "," + GPSIFIX_CGEE.Text;
 				cmd += "," + GPSIFIX_SGEE.Text;
 				cmd += "," + GPSIFIX_UPDATE.Value.ToString("#", CultureInfo.InstalledUICulture);
 			}
-			setCmdUser(btnCmd30, cmd);
+			SetCmdValue(btnCmd30, cmd);
+		}
+
+		private void cbSpeed_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			int value;
+			if (!int.TryParse(cbSpeed.Items[cbSpeed.SelectedIndex] as string, NumberStyles.Integer, cultureInfo, out value))
+				return;
+
+			baud = value;
+			if (serialPort != null && serialPort.IsOpen)
+				serialPort.BaudRate = baud;
+		}
+
+		private void cbProtocol_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (serialPort != null)
+			{
+				switch (FlowProtocol.Items[FlowProtocol.SelectedIndex] as string)
+				{
+					case "Hardware":
+						serialPort.Handshake = Handshake.RequestToSend;
+						protocol = "RTS";
+						RTS.Enabled = false;
+						break;
+					default:
+						serialPort.Handshake = Handshake.None;
+						protocol = "none";
+						RTS.Enabled = true;
+						serialPort.RtsEnable = RTS.Checked;
+						break;
+				}
+			}
+		}
+
+		private void cbRTS_CheckedChanged(object sender, EventArgs e)
+		{
+			if (serialPort != null && serialPort.IsOpen && RTS.Enabled)
+			{
+				serialPort.RtsEnable = RTS.Checked;
+			}
+		}
+
+		private void CIBAUD_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SetCmdValue(btnCmd52, CIBAUD.Text);
+		}
+
+		private void SetCmdValue(CmdButton cmd, string value)
+		{
+			value = value ?? string.Empty;
+			string text = cmd.Template as string;
+
+			if (string.IsNullOrEmpty(text))
+			{
+				text = cmd.Command.Trim();
+				if (string.IsNullOrEmpty(text))
+					text = cmd.Text.Trim();
+				int idx;
+				if ((idx = text.IndexOf('=')) > 0)
+					text = text.Substring(0, idx + 1) + "#VALUE";
+			}
+			if (!string.IsNullOrEmpty(text) && text.IndexOf("#VALUE") >= 0)
+			{
+				if (string.IsNullOrEmpty(cmd.Template))
+					cmd.Template = text;
+				cmd.Command = text.Replace("#VALUE", value);
+			}
 		}
 	}
 }

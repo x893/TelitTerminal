@@ -9,7 +9,8 @@ namespace TelitTerminal
 	{
 		public TextBoxEx()
 		{
-			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 		}
 	}
 }
