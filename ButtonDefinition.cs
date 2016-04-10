@@ -17,7 +17,7 @@ namespace TelitTerminal
 			InitializeComponent();
 		}
 
-		public XButton Xbutton
+		public XButton XButton
 		{
 			get { return m_xbutton; }
 			set { m_xbutton = value; }

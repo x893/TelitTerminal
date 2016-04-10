@@ -203,11 +203,14 @@ namespace TelitTerminal
 
 		public CommandEx(CmdButton cmd, string toolTip)
 		{
-			Name = cmd.Name;
-			Command = cmd.Command;
-			Text = cmd.Text;
-			ToolTip = toolTip;
-			Template = cmd.Template;
+			if (cmd != null)
+			{
+				Name = cmd.Name;
+				Command = cmd.Command;
+				Text = cmd.Text;
+				ToolTip = toolTip;
+				Template = cmd.Template;
+			}
 		}
 		public string Name { get; set; }
 		public string Command { get; set; }
@@ -217,11 +220,13 @@ namespace TelitTerminal
 
 		public bool Changed(CmdButton cmd)
 		{
-			return (
-				(Command ?? string.Empty) != (cmd.Command ?? string.Empty) ||
-				(Text ?? string.Empty) != (cmd.Text ?? string.Empty) ||
-				(Template ?? string.Empty) != (cmd.Template ?? string.Empty)
-				);
+			if (cmd != null)
+				return (
+					(Command ?? string.Empty) != (cmd.Command ?? string.Empty) ||
+					(Text ?? string.Empty) != (cmd.Text ?? string.Empty) ||
+					(Template ?? string.Empty) != (cmd.Template ?? string.Empty)
+					);
+			return false;
 		}
 
 		public override string ToString()

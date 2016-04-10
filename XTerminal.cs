@@ -1764,7 +1764,7 @@ namespace TelitTerminal
 			if (cmd != null)
 			{
 				CancelCmdEdit();
-				ButtonDefEdit.Xbutton = cmd;
+				ButtonDefEdit.XButton = cmd;
 				ButtonDefEdit.CmdText = cmd.Text;
 				ButtonDefEdit.CmdCommand = cmd.Command;
 				ButtonDefEdit.CmdTemplate = cmd.Template;
@@ -1806,16 +1806,16 @@ namespace TelitTerminal
 		#region cancelCmdEdit() 
 		private void CancelCmdEdit()
 		{
-			if (ButtonDefEdit.Xbutton != null)
+			if (ButtonDefEdit.XButton != null)
 			{
-				XButton cmd = ButtonDefEdit.Xbutton;
+				XButton cmd = ButtonDefEdit.XButton;
 				cmd.BackColor = Color.FromKnownColor(KnownColor.Control);
 				cmd.UseVisualStyleBackColor = true;
 				cmd.Focus();
 			}
 			else
 				this.Focus();
-			ButtonDefEdit.Xbutton = null;
+			ButtonDefEdit.XButton = null;
 		}
 		#endregion
 
@@ -1906,12 +1906,15 @@ namespace TelitTerminal
 		private void cbSpeed_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int value;
-			if (!int.TryParse(cbSpeed.Items[cbSpeed.SelectedIndex] as string, NumberStyles.Integer, cultureInfo, out value))
-				return;
-
-			baud = value;
-			if (serialPort != null && serialPort.IsOpen)
-				serialPort.BaudRate = baud;
+			if (cbSpeed.SelectedIndex >= 0)
+			{
+				if (int.TryParse(cbSpeed.Items[cbSpeed.SelectedIndex] as string, NumberStyles.Integer, cultureInfo, out value))
+				{
+					baud = value;
+					if (serialPort != null && serialPort.IsOpen)
+						serialPort.BaudRate = baud;
+				}
+			}
 		}
 
 		private void cbProtocol_SelectedIndexChanged(object sender, EventArgs e)

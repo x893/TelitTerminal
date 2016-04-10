@@ -54,7 +54,7 @@ namespace TelitTerminal
 			get
 			{
 				string name = Name;
-				if (name.Length > 6 && name.StartsWith("btnCmd"))
+				if (name.Length > 6 && name.StartsWith("btnCmd", StringComparison.InvariantCulture | StringComparison.Ordinal))
 				{
 					name = name.Substring(6);
 					int idx;
